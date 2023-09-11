@@ -100,7 +100,7 @@ def run_modify_newton_method(segment):
     print('\nМодифицированный метод Ньютона')
     x = [0 for _ in range(100)]
     x[0] = pick_first_approximation(segment, f, f2)
-    for k in range(1, 100):
+    for k in range(1, 20):
         x[k] = x[k - 1] - f(x[k - 1]) / f1(x[0])
         difference = abs(x[k] - x[k - 1])
         if difference < eps:
@@ -109,7 +109,7 @@ def run_modify_newton_method(segment):
             print(f'Дельта (x_m - x_m-1): {difference}')
             print(f'Невязка: {abs(f(x[k]))}')
             return
-    print('За 100 шагов решение заданной точности не найдено.')
+    print('За 20 шагов решение заданной точности не найдено.')
 
 
 print('''
