@@ -28,6 +28,10 @@ def L(n_, z_):
     return result
 
 
+def Lagrange(n_, z_, x_):
+    return L(n_, z_).calculate(x_)
+
+
 print('Задача алгебраического интерполирования')
 print('Вариант 9')
 
@@ -52,7 +56,7 @@ y = [f(z[i]) for i in range(points_count)]
 for j in range(points_count):
     print(f'f({z[j]}) = {y[j]}')
 
-approximate_value = L(n, z).calculate(x)
+approximate_value = Lagrange(n, z, x)
 
 print(f'Значение интерполяционного многочлена P(x) = {approximate_value}')
 print(f'Погрешность ef(x) = {abs(f(x) - approximate_value)}')
