@@ -2,8 +2,34 @@ import polynomial as pol
 from math import exp
 
 
-def f(x):
-    return 1 - exp(-x) + x ** 2
+def f(x_):
+    return 1 - exp(-x_) + x_ ** 2
+
+
+def product(l_):
+    result = pol.Polynomial(1)
+    for i in range(len(l_)):
+        result *= l_[i]
+    return result
+
+
+def w(n_, z_):
+    return product([pol.Polynomial(1, -z_[k]) for k in range(n_ + 1)])
+
+
+def l(k, n_, z_):
+    return w(n_, z_) // (pol.Polynomial(1, -z_[k]) * w(n_, z_).derivative.calculate(z_[k]))
+
+
+def L(n_, z_):
+    result = pol.Polynomial(0)
+    for k in range(n_ + 1):
+        result += pol.Polynomial(f(z_[k])) * l(k, n_, z_)
+    return result
+
+
+def Lagrange(n_, z_, x_):
+    return L(n_, z_).calculate(x_)
 
 
 class NewtonInterpolator:
@@ -69,6 +95,7 @@ points_count = int(input('Введите количество узлов инт�
 print('Введите отрезок, на котором нужно интерполировать функцию: ')
 A = float(input('A = '))
 B = float(input('B = '))
+
 z = [A + i * (B - A) / points_count for i in range(points_count)]  # узлы интерполяции
 y = [f(z[i]) for i in range(points_count)]
 print('Таблица значений функции: ')
@@ -76,7 +103,8 @@ for j in range(points_count):
     print(f'f(z{j}) = {y[j]}')
 
 newton_interpolator = NewtonInterpolator(z, y)
-while True:
+is_over = 0
+while is_over == 0:
     x0 = float(input('Введите точку интерполирования: x = '))
     n = int(input(f'Введите степень интерполяционного многочлена не выше {points_count - 1}: n = '))
     while n >= points_count:
@@ -101,4 +129,5 @@ while True:
 
     print(f'Значение интерполяционного многочлена в форме Ньютона P(x) = {approximate_newton_value}')
     print(f'Погрешность ef(x) = {abs(f(x0) - approximate_newton_value)}')
-    print('\n\n')
+    print('\n')
+    is_over = int(input('Для завершения программы введите -1. Для продолжения введите 0\n'))
