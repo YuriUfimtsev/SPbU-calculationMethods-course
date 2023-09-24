@@ -6,15 +6,26 @@ def f(x):
     return 1 - exp(-x) + x ** 2
 
 
-def product(l):
-    result = 1
-    for i in range(len(l)):
-        result *= l[i]
+def product(l_):
+    result = pol.Polynomial(1)
+    for i in range(len(l_)):
+        result *= l_[i]
     return result
 
 
-def w(n, x, z):
-    return product([(x - z[k]) for k in range(n + 1)])
+def w(n_, z_):
+    return product([pol.Polynomial(1, -z_[k]) for k in range(n_ + 1)])
+
+
+def l(k, n_, z_):
+    return w(n_, z_) // (pol.Polynomial(1, -z_[k]) * w(n_, z_).derivative.calculate(z_[k]))
+
+
+def L(n, z):
+    result = pol.Polynomial(0)
+    for k in range(n + 1):
+        result += pol.Polynomial(f(z[k])) * l(k, n, z)
+    return result
 
 
 print('Задача алгебраического интерполирования')
@@ -41,7 +52,10 @@ y = [f(z[i]) for i in range(points_count)]
 for j in range(points_count):
     print(f'f({z[j]}) = {y[j]}')
 
+approximate_value = L(n, z).calculate(x)
 
+print(f'Значение интерполяционного многочлена P(x) = {approximate_value}')
+print(f'Погрешность ef(x) = {abs(f(x) - approximate_value)}')
 
 
 
