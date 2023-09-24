@@ -2,8 +2,8 @@ import polynomial as pol
 from math import exp
 
 
-def f(x):
-    return 1 - exp(-x) + x ** 2
+def f(x_):
+    return 1 - exp(-x_) + x_ ** 2
 
 
 def product(l_):
@@ -21,10 +21,10 @@ def l(k, n_, z_):
     return w(n_, z_) // (pol.Polynomial(1, -z_[k]) * w(n_, z_).derivative.calculate(z_[k]))
 
 
-def L(n, z):
+def L(n_, z_):
     result = pol.Polynomial(0)
-    for k in range(n + 1):
-        result += pol.Polynomial(f(z[k])) * l(k, n, z)
+    for k in range(n_ + 1):
+        result += pol.Polynomial(f(z_[k])) * l(k, n_, z_)
     return result
 
 
