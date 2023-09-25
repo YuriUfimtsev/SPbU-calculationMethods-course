@@ -7,33 +7,7 @@ def f(x_):
     return 1 - exp(-x_) + x_ ** 2
 
 
-def Lagrange(n_, z_, x_):
-    return L(n_, z_).calculate(x_)
-
-
-def product(l_):
-    result = pol.Polynomial(1.0)
-    for i in range(len(l_)):
-        result *= l_[i]
-    return result
-
-
-def w(n_, z_):
-    return product([pol.Polynomial(1.0, -z_[k]) for k in range(n_ + 1)])
-
-
-def l(k, n_, z_):
-    return w(n_, z_) // (pol.Polynomial(1.0, -z_[k]) * w(n_, z_).derivative.calculate(z_[k]))
-
-
-def L(n_, z_):
-    result = pol.Polynomial(0.0)
-    for k in range(n_ + 1):
-        result += pol.Polynomial(f(z_[k])) * l(k, n_, z_)
-    return result
-
-
-def new_lagrange(n_, z_, x):
+def Lagrange(n_, z_, x):
     result = 0
     for k in range(n_ + 1):
         p1 = 1
@@ -88,7 +62,7 @@ while not is_program_over:
     else:
         newton_interpolator.reform_separated_differences_table(z, y)
 
-    approximate_lagrange_value = new_lagrange(n, z, x0)
+    approximate_lagrange_value = Lagrange(n, z, x0)
 
     print(f'Значение интерполяционного многочлена в форме Лагранжа P(x) = {approximate_lagrange_value}')
     print(f'Погрешность ef(x) = {abs(f(x0) - approximate_lagrange_value)}')
