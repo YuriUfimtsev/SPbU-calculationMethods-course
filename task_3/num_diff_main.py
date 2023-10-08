@@ -19,7 +19,13 @@ while not is_program_over:
     print_interpolation_table(func_table)
 
     print('\nРезультаты: ')
-    form_function_derivatives_table(func_table)
+    result_derivatives_table = form_function_derivatives_table(func_table)
+    for row in result_derivatives_table:
+        # Используем метод join() для объединения элементов строки в одну строку
+        # с разделителем (пробелом в данном случае)
+        row_str = ' '.join(map(str, row))
+        # Выводим строку на консоль
+        print(row_str)
 
     print('\n')
     is_program_over = int(input('Для завершения программы введите -1. Для продолжения введите 0\n')) == -1
