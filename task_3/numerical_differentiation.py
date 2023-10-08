@@ -35,11 +35,11 @@ def _create_string_matrix(result_derivatives_table):
         'f\'(x) т.',
         'f\'(x) ч.д.',
         '|f\'(x) т. - f\'(x) ч.д.|',
-        '|f\'(x) т. - f\'(x) ч.д.|\n------|f\'(x) ч.д.|',
-        'f\'(x) т.',
-        'f\'(x) ч.д.',
-        '|f\'(x) т. - f\'(x) ч.д.|',
-        '|f\'(x) т. - f\'(x) ч.д.|\n------|f\'(x) ч.д.|'
+        'Δ относ.',
+        'f\'\'(x) т.',
+        'f\'\'(x) ч.д.',
+        '|f\'\'(x) т. - f\'\'(x) ч.д.|',
+        'Δ относ.'
     ]
     result_matrix = []
     for row in result_derivatives_table:
@@ -67,10 +67,10 @@ def _fill_first_derivative_num_diff_column(result_derivatives_table, h):
     for i in range(len(result_derivatives_table)):
         if i == 0:
             result_derivatives_table[i][3] = (
-                (-3 * result_derivatives_table[i][1]
-                 + 4 * result_derivatives_table[i + 1][1]
-                 - result_derivatives_table[i + 2][1])
-                / (2 * h)
+                    (-3 * result_derivatives_table[i][1]
+                     + 4 * result_derivatives_table[i + 1][1]
+                     - result_derivatives_table[i + 2][1])
+                    / (2 * h)
             )
         elif i == len(result_derivatives_table) - 1:
             result_derivatives_table[i][3] = (
@@ -109,17 +109,19 @@ def _fill_second_derivative_num_diff_column(result_derivatives_table, h):
                     (result_derivatives_table[i + 1][1]
                      - 2 * result_derivatives_table[i][1]
                      + result_derivatives_table[i - 1][1])
-                    / h**2
+                    / h ** 2
             )
 
 
 def _fill_second_derivative_absolute_inaccuracy_column(result_derivatives_table):
     for i in range(len(result_derivatives_table)):
         if i != 0 and i != (len(result_derivatives_table) - 1):
-            result_derivatives_table[i][5 + 3] = abs(result_derivatives_table[i][5 + 2] - result_derivatives_table[i][5 + 1])
+            result_derivatives_table[i][5 + 3] = (
+                abs(result_derivatives_table[i][5 + 2] - result_derivatives_table[i][5 + 1]))
 
 
 def _fill_second_derivative_relative_inaccuracy_column(result_derivatives_table):
     for i in range(len(result_derivatives_table)):
         if i != 0 and i != (len(result_derivatives_table) - 1):
-            result_derivatives_table[i][5 + 4] = result_derivatives_table[i][5 + 3] / abs(result_derivatives_table[i][5 + 2])
+            result_derivatives_table[i][5 + 4] = result_derivatives_table[i][5 + 3] / abs(
+                result_derivatives_table[i][5 + 2])

@@ -20,12 +20,12 @@ while not is_program_over:
 
     print('\nРезультаты: ')
     result_derivatives_table = form_function_derivatives_table(func_table)
+    max_length = max(max(map(lambda x: len(str(x)), row)) for row in result_derivatives_table)
+
     for row in result_derivatives_table:
-        # Используем метод join() для объединения элементов строки в одну строку
-        # с разделителем (пробелом в данном случае)
-        row_str = ' '.join(map(str, row))
-        # Выводим строку на консоль
-        print(row_str)
+        for i in range(len(row)):
+            print("{:{width}}".format(row[i], width=max_length), end=" ")
+        print()
 
     print('\n')
     is_program_over = int(input('Для завершения программы введите -1. Для продолжения введите 0\n')) == -1
