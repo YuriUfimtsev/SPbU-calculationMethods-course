@@ -6,7 +6,7 @@ class NewtonInterpolator:
         self.table = [[0.0] for _ in range(2)]
         self.polynomial = pol.Polynomial(1)
 
-    def _form_polynomial(self, polynomial_degree):
+    def form_polynomial(self, polynomial_degree):
         def get_pol_multiplier(degree_number):
             multiplier = pol.Polynomial(1)
             for p in range(0, degree_number):
