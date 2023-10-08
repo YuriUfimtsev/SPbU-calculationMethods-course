@@ -22,6 +22,31 @@ def Lagrange(n_, z_, x):
     return result
 
 
+def get_interpolation_table(a, h, points_count_, func):
+    """
+    Generates a table with interpolation nodes and function values in these nodes.
+    Based on start of the segment and step.
+    """
+    return [(a + i * h / (points_count_ - 1),
+             func(a + i * h / (points_count_ - 1))) for i in range(points_count_)]
+
+
+def sort_interpolation_table(interpolation_table, x):
+    """
+    Sorts a table with interpolation nodes and function values in these nodes.
+    Nodes are ordered by proximity to a point x.
+    """
+    return interpolation_table.sort(key=lambda array: abs(array[0] - x))
+
+
+def print_interpolation_table(interpolation_table):
+    """
+    Prints a table with interpolation nodes and function values in these nodes.
+    """
+    for j in range(len(interpolation_table)):
+        print(f'f({interpolation_table[j][0]}) = {interpolation_table[j][1]}')
+
+
 print('Задача алгебраического интерполирования')
 print('Вариант 9')
 
@@ -30,11 +55,10 @@ print('Введите отрезок, на котором нужно интер�
 A = float(input('A = '))
 B = float(input('B = '))
 
-z = [A + i * (B - A) / (points_count - 1) for i in range(points_count)]  # узлы интерполяции
-y = [f(z[i]) for i in range(points_count)]
+func_table = get_interpolation_table(A, B - A, points_count, f)
+
 print('Таблица значений функции: ')
-for j in range(points_count):
-    print(f'f({z[j]}) = {y[j]}')
+print_interpolation_table(func_table)
 
 last_point = 0
 is_program_over = False
@@ -49,20 +73,17 @@ while not is_program_over:
                       f'{points_count - 1}: n = '))
 
     # сортируем узлы интерполирования по расстоянию от точки x
-    z1 = [(abs(z[i] - x0), z[i]) for i in range(points_count)]
-    z1.sort()
-    z = list(map(lambda p: p[1], z1))
-    y = [f(z[i]) for i in range(points_count)]
+    sort_interpolation_table(func_table, x0)
+
     print('Набор узлов, ближайших к точке x, по которым будет строиться интерполяционный многочлен. Также их значения')
-    for j in range(points_count):
-        print(f'f({z[j]}) = {y[j]}')
+    print_interpolation_table(func_table)
 
     if last_point == x0 and not is_first_iteration:
         newton_interpolator.calculate_polynomial_value_at_point(n, x0)
     else:
-        newton_interpolator.reform_separated_differences_table(z, y)
+        newton_interpolator.reform_separated_differences_table(func_table)
 
-    approximate_lagrange_value = Lagrange(n, z, x0)
+    approximate_lagrange_value = Lagrange(n, list(map(lambda p: p[0], func_table)), x0)
 
     print(f'Значение интерполяционного многочлена в форме Лагранжа P(x) = {approximate_lagrange_value}')
     print(f'Погрешность ef(x) = {abs(f(x0) - approximate_lagrange_value)}')
