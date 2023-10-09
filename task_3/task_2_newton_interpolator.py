@@ -33,5 +33,5 @@ class NewtonInterpolator:
 
     def calculate_polynomial_value_at_point(self, polynomial_degree, x):
         if polynomial_degree != self.polynomial.degree:
-            self._form_polynomial(polynomial_degree)
+            self.form_polynomial(polynomial_degree)
         return self.polynomial.calculate(x)
