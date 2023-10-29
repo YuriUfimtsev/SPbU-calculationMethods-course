@@ -9,11 +9,15 @@ class IntegrateResult:
 
 def f(x):
     return sin(x) * cos(x) ** 2 + x ** 2
+    # return p(x, 0)
     # return p(x, 1) # для отладки
+    # return p(x, 2)
+    # return p(x, 3)
+    # return p(x, 4)
 
 
 def p(x, n):  # многочлен степени n
-    return sum([x ** i for i in range(n + 1)])
+    return x ** n
 
 
 def left_rectangle_method(f, a, b):
@@ -33,7 +37,7 @@ def trapezoids_method(f, a, b):
 
 
 def parabola_quadrature(f, a, b):
-    return ((b - a) / 6) * (f(a) + 4*f((a + b) / 2)) + f(b)
+    return ((b - a) / 6) * (f(a) + 4*f((a + b) / 2) + f(b))
 
 
 def quadrature_38(f, a, b):
@@ -50,6 +54,12 @@ b = float(input('B = '))
 
 # точное значение интеграла f(x) на [a, b], вычисленное вручную
 J = (1 / 3) * (b ** 3 - a ** 3) - (1 / 4) * (cos(b) - cos(a)) - (1 / 12) * (cos(3 * b) - cos(3 * a))
+# J = b - a # если f = const = 1
+# J = (1 / 2) * (b ** 2 - a ** 2) # если f = x
+# J = (1 / 3) * (b ** 3 - a ** 3) # если f = x^2
+# J = (1 / 4) * (b ** 4 - a ** 4) # если f = x^3
+# J = (1 / 5) * (b ** 5 - a ** 5) # если f = x^4
+
 print(f'Интеграл f по [a, b] = {J} (точное значение)')
 print()
 
