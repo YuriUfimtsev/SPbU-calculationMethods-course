@@ -24,7 +24,7 @@ def form_function_derivatives_table(default_function_table):
     _fill_second_derivative_base_column(result_table)
     _fill_second_derivative_num_diff_column(result_table, _h)
     _fill_second_derivative_absolute_inaccuracy_column(result_table)
-    _fill_second_derivative_relative_inaccuracy_column(result_table)
+    # _fill_second_derivative_relative_inaccuracy_column(result_table)
     return _create_string_matrix(result_table)
 
 
@@ -43,7 +43,7 @@ def _create_string_matrix(result_derivatives_table):
     ]
     result_matrix = []
     for row in result_derivatives_table:
-        new_row = [str(round(number, 5)) for number in row]
+        new_row = [str(number) for number in row]
         result_matrix.append(new_row)
     for i in range(7, 10):
         result_matrix[0][i] = ''
