@@ -27,7 +27,8 @@ def secant(segment, polynom_: polynomial.Polynomial):
     eps = 10 ** -10
     x = [a, b]
     while abs(x[-1] - x[-2]) >= eps:
-        x.append(x[-1] - ((x[-1] - x[-2]) * (polynom_.calculate(x[-1]) / (polynom_.calculate(x[-1]) - polynom_.calculate(x[-2])))))
+        x.append(x[-1] - ((x[-1] - x[-2]) * (
+                    polynom_.calculate(x[-1]) / (polynom_.calculate(x[-1]) - polynom_.calculate(x[-2])))))
     return x[-1]
 
 

@@ -2,7 +2,6 @@ from math import exp
 from task_2_export_functions import Lagrange, get_interpolation_table, print_interpolation_table, sort_interpolation_table, f
 from task_2_newton_interpolator import NewtonInterpolator
 
-
 print('Задача обратного интерполирования')
 print('Вариант 9')
 
@@ -26,11 +25,6 @@ while True:
     print('Отсортированная таблица значений для функции f^-1: ')
     print_interpolation_table(yx)
 
-
-# interpolator = NewtonInterpolator()
-# interpolator.reform_separated_differences_table(yx)
-# interpolator.form_polynomial(n)
-# approximated_value = interpolator.calculate_polynomial_value_at_point(n, F)  # Lagrange(n, yx, F)
-    approximated_value = Lagrange(n, yx, F)
-    print(f'x* = {approximated_value}')
-    print(f'Невязка r(x*) = {abs(f(approximated_value) - F)}')
+approximated_value = Lagrange(n, yx, F)
+print(f'x* = {approximated_value}')
+print(f'Невязка r(x*) = {abs(f(approximated_value) - F)}')
