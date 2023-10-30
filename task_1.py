@@ -51,17 +51,17 @@ def bisect(segment):
     print(f'Невязка: {abs(f(x_))}')
 
 
-def secant(segment):
+def secant(segment, func=f):
     a, b = segment[0], segment[1]
     x = [a, b]
     while abs(x[-1] - x[-2]) >= eps:
-        x.append(x[-1] - ((x[-1] - x[-2]) * (f(x[-1]) / (f(x[-1]) - f(x[-2])))))
+        x.append(x[-1] - ((x[-1] - x[-2]) * (func(x[-1]) / (func(x[-1]) - func(x[-2])))))
     print('\nМетод секущих: ')
     print(f'Начальные приближения к корню: {a, b}')
     print(f'Количество шагов для достижения точности: {len(x) - 2}')
     print(f'Приближенное решение: {x[-1]}')
     print(f'Дельта: {abs(x[-1] - x[-2])}')
-    print(f'Невязка: {abs(f(x[-1]))}')
+    print(f'Невязка: {abs(func(x[-1]))}')
 
 
 def pick_first_approximation(segment, f, f2):
