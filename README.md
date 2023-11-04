@@ -3,4 +3,5 @@ Homeworks of the Computational Methods and Computational Practical Work course (
 
 * Task 1: search of function value on interval (bisect, Newton, modified Newton, secants)
 * Task 2: interpolating function (Lagrange and Newton)
-
+* Task 3: inverse interpolation & numerical differentiation
+* Task 4: numerical integration
