@@ -27,11 +27,9 @@ def compound_trapezoids_method(f, a, b, m):
 
 
 def compound_parabola_quadrature(f, a, b, m):
-    pass
-
-
-def compound_quadrature_38(f, a, b, m):
-    pass
+    h = (b - a) / m
+    y = [a + j * h for j in range(m + 1)]
+    return sum([parabola_quadrature(f, y[j], y[j + 1]) for j in range(m)])
 
 
 if __name__ == "__main__":
@@ -46,9 +44,14 @@ if __name__ == "__main__":
         print('Введите количество точек разбиения: ')
         m = int(input('m = '))
 
+        # точное значение интеграла f(x) на [a, b], вычисленное вручную
         J = accurate_integral_value(a, b)
+        # J = b - a # если f = const = 1
+        # J = (1 / 2) * (b ** 2 - a ** 2) # если f = x
+        # J = (1 / 3) * (b ** 3 - a ** 3) # если f = x^2
+        # J = (1 / 4) * (b ** 4 - a ** 4) # если f = x^3
 
-        print(f'Интеграл f по [a, b] = {J} (точное значение)')
+        print(f'Интеграл f по [a, b] = {J} (точное значение, p = 1)')
         print()
 
         left_rectangle_integral = IntegrateResult(integral := compound_left_rectangles_method(f, a, b, m),
@@ -58,8 +61,7 @@ if __name__ == "__main__":
         middle_rectangle_integral = IntegrateResult(integral := compound_middle_rectangles_method(f, a, b, m),
                                                     abs(J - integral))
         trapezoids_integral = IntegrateResult(integral := compound_trapezoids_method(f, a, b, m), abs(J - integral))
-        # parabola_integral = IntegrateResult(integral := compound_parabola_quadrature(f, a, b, m), abs(J - integral))
-        # integral_38 = IntegrateResult(integral := compound_quadrature_38(f, a, b, m), abs(J - integral))
+        parabola_integral = IntegrateResult(integral := compound_parabola_quadrature(f, a, b, m), abs(J - integral))
 
         print(f'Интеграл f по [a, b] = {left_rectangle_integral.value} (формула левого прямоугольника)')
         print(f'Погрешность абсолютная = {left_rectangle_integral.error}')
@@ -77,13 +79,9 @@ if __name__ == "__main__":
         print(f'Погрешность абсолютная = {trapezoids_integral.error}')
         print(f'Погрешность относительная = {trapezoids_integral.error / J}\n')
 
-        # print(f'Интеграл f по [a, b] = {parabola_integral.value} (формула Симпсона (параболы))')
-        # print(f'Погрешность абсолютная = {parabola_integral.error}')
-        # print(f'Погрешность относительная = {parabola_integral.error / J}\n')
-        #
-        # print(f'Интеграл f по [a, b] = {integral_38.value} (формула 3/8)')
-        # print(f'Погрешность абсолютная = {integral_38.error}')
-        # print(f'Погрешность относительная = {integral_38.error / J}\n')
+        print(f'Интеграл f по [a, b] = {parabola_integral.value} (формула Симпсона (параболы))')
+        print(f'Погрешность абсолютная = {parabola_integral.error}')
+        print(f'Погрешность относительная = {parabola_integral.error / J}\n')
 
         print('Введите 0, если хотите завершить вычисление')
         print('Для продолжения работы введите любое число')
