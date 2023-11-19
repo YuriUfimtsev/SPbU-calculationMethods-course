@@ -8,6 +8,26 @@ def compound_left_rectangles_method(f, a, b, m):
     # return h * sum([f(y[j]) for j in range(m)])
 
 
+def optimized_left_rectangles_method(f0, w, h):
+    return h * (w + f0)
+
+
+def optimized_right_rectangles_method(fm, w, h):
+    return h * (w + fm)
+
+
+def optimized_middle_rectangles_method(h, q):
+    return h * q
+
+
+def optimized_trapezoids_method(z, w, h):
+    return h / 2 * (z + 2 * w)
+
+
+def optimized_parabola_quadrature(h, z, w, q):
+    return (h / 6) * (z + 2 * w + 4 * q)
+
+
 def compound_right_rectangles_method(f, a, b, m):
     h = (b - a) / m
     y = [a + j * h for j in range(m + 1)]
@@ -51,17 +71,35 @@ if __name__ == "__main__":
         # J = (1 / 3) * (b ** 3 - a ** 3) # если f = x^2
         # J = (1 / 4) * (b ** 4 - a ** 4) # если f = x^3
 
+
         print(f'Интеграл f по [a, b] = {J} (точное значение, p = 1)')
         print()
 
-        left_rectangle_integral = IntegrateResult(integral := compound_left_rectangles_method(f, a, b, m),
+        h = (b - a) / m
+        x = [a + j * h for j in range(m + 1)]
+        w = sum([f(x[j]) for j in range(1, m)])
+        f0 = f(x[0])
+        fm = f(x[m])
+        z = f(x[0]) + f(x[m])
+        q = sum([f(x[j] + h / 2) for j in range(m)])
+
+        # left_rectangle_integral = IntegrateResult(integral := compound_left_rectangles_method(f, a, b, m),
+        #                                           abs(J - integral))
+        # right_rectangle_integral = IntegrateResult(integral := compound_right_rectangles_method(f, a, b, m),
+        #                                            abs(J - integral))
+        # middle_rectangle_integral = IntegrateResult(integral := compound_middle_rectangles_method(f, a, b, m),
+        #                                             abs(J - integral))
+        # trapezoids_integral = IntegrateResult(integral := compound_trapezoids_method(f, a, b, m), abs(J - integral))
+        # parabola_integral = IntegrateResult(integral := compound_parabola_quadrature(f, a, b, m), abs(J - integral))
+
+        left_rectangle_integral = IntegrateResult(integral := optimized_left_rectangles_method(f0, w, h),
                                                   abs(J - integral))
-        right_rectangle_integral = IntegrateResult(integral := compound_right_rectangles_method(f, a, b, m),
+        right_rectangle_integral = IntegrateResult(integral := optimized_right_rectangles_method(fm, w, h),
                                                    abs(J - integral))
-        middle_rectangle_integral = IntegrateResult(integral := compound_middle_rectangles_method(f, a, b, m),
+        middle_rectangle_integral = IntegrateResult(integral := optimized_middle_rectangles_method(h, q),
                                                     abs(J - integral))
-        trapezoids_integral = IntegrateResult(integral := compound_trapezoids_method(f, a, b, m), abs(J - integral))
-        parabola_integral = IntegrateResult(integral := compound_parabola_quadrature(f, a, b, m), abs(J - integral))
+        trapezoids_integral = IntegrateResult(integral := optimized_trapezoids_method(z, w, h), abs(J - integral))
+        parabola_integral = IntegrateResult(integral := optimized_parabola_quadrature(h, z, w, q), abs(J - integral))
 
         print(f'Интеграл f по [a, b] = {left_rectangle_integral.value} (формула левого прямоугольника)')
         print(f'Погрешность абсолютная = {left_rectangle_integral.error}')
