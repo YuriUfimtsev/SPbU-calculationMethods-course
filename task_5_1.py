@@ -16,6 +16,8 @@ def moment(n, a, b):
 
 print('Задача приближённого вычисления определённого интеграла с помощью ИКФ')
 print('Вариант 9')
+print('f(x) = sin(x)')
+print('ρ(x) = 1 / (x + 0.1)')
 
 while True:
     print('Введите отрезок интегрирования:')
@@ -29,7 +31,13 @@ while True:
         raise ValueError("Узлы интерполяции должны быть различными!")
     C = [[x[j] ** i for j in range(N)] for i in range(N)]
     d = [round(moment(i, A, B), 3) for i in range(N)]
+    print('Моменты весовой функции:')
+    for i in range(N):
+        print(f'μ{i} = {d[i]}')
     a = linalg.solve(C, d)
+    print('Коэффициенты КФ:')
+    for i in range(len(a)):
+        print(f'a{i} = {round(a[i], 3)}')
     J_approximate = sum([a[k] * f(x[k]) for k in range(N)])
     J = integrate.quad(lambda x_: f(x_) * p(x_), A, B)[0]
 
