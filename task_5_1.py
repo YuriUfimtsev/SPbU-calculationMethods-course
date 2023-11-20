@@ -23,8 +23,10 @@ while True:
     B = float(input('B = '))
     print('Введите количество узлов интерполяции:')
     N = int(input('N = '))
-    h = (B - A) / N
-    x = [A + k * h for k in range(N)]
+    print('Введите узлы интерполяции через пробел:')
+    x = [float(i) for i in input().split()]
+    if len(x) != len(set(x)):
+        raise ValueError("Узлы интерполяции должны быть различными!")
     C = [[x[j] ** i for j in range(N)] for i in range(N)]
     d = [round(moment(i, A, B), 3) for i in range(N)]
     a = linalg.solve(C, d)
@@ -34,3 +36,10 @@ while True:
     print(f'Точное значение интеграла = {J}')
     print(f'Приближённое значение интеграла = {J_approximate}')
     print(f'Погрешность = {abs(J - J_approximate)}')
+
+    print('Чтобы закончить вычисления, введите 0')
+    print('Чтобы продолжить, введите любое число')
+
+    is_continue = input() == '0'
+    if not is_continue:
+        break
