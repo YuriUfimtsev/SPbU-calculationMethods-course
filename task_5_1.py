@@ -1,5 +1,6 @@
 from scipy import integrate, linalg
 from math import sin
+import polynomial as pol
 
 
 def f(x_):
@@ -25,6 +26,8 @@ while True:
     B = float(input('B = '))
     print('Введите количество узлов интерполяции:')
     N = int(input('N = '))
+    if N < 2:
+        raise ValueError("Количество узлов интерполяции должно быть больше двух!")
     print('Введите узлы интерполяции через пробел:')
     x = [float(i) for i in input().split()]
     if len(x) != len(set(x)):
@@ -46,8 +49,9 @@ while True:
     print(f'Погрешность = {abs(J - J_approximate)}')
 
     print('Чтобы закончить вычисления, введите 0')
+    print('Для проверки точности КФ введите 1')
     print('Чтобы продолжить, введите любое число')
 
-    is_continue = input() == '0'
-    if not is_continue:
+    flag = int(input())
+    if flag == 0:
         break
