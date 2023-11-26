@@ -37,8 +37,6 @@ while True:
 
     orthogonal_polynom = get_orthogonal_polynom(d)
     print(f'\nОртогональный многочлен: {str(orthogonal_polynom)}')
-    # for i in range(N):
-    #     print(f'μ{i} = {d[i]}')
 
     roots = orthogonal_polynom.roots()
     print('\nУзлы КФ:')
