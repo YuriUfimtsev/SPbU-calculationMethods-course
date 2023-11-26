@@ -49,6 +49,8 @@ while True:
     print('\nКоэффициенты КФ:')
     for i in range(len(a)):
         print(f'a{i} = {a[i]}')
+        if type(a[i]) is complex:
+            raise ValueError("Комплексные корни. Невозможно провести тест на положительные коэффициенты")
         if a[i] <= 0:
             raise ValueError("Тест на положительне коэффициенты не пройден")
 
