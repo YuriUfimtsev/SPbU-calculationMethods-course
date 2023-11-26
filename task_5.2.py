@@ -85,20 +85,32 @@ for N in [6, 7, 8]:
     approx_integral = Gaussian_integral(p, a, b, xs[N], coefficients[N])
     print(f'Погрешность интеграла x^{N} от a до b = {abs(integral - approx_integral)}')
 
-print('Введите значения N1, N2, N3: ')
-N1 = int(input('N1 = '))
-N2 = int(input('N2 = '))
-N3 = int(input('N3 = '))
+while True:
+    print('Введите значения N1, N2, N3: ')
+    N1 = int(input('N1 = '))
+    N2 = int(input('N2 = '))
+    N3 = int(input('N3 = '))
 
-integral = integrate.quad(f, a, b)[0]  # точное значение интеграла
-approx_integral_1 = Gaussian_integral(f, a, b, xs[N1], coefficients[N1])
-approx_integral_2 = Gaussian_integral(f, a, b, xs[N2], coefficients[N2])
-approx_integral_3 = Gaussian_integral(f, a, b, xs[N3], coefficients[N3])
+    integral = integrate.quad(f, a, b)[0]  # точное значение интеграла
+    approx_integral_1 = Gaussian_integral(f, a, b, xs[N1], coefficients[N1])
+    approx_integral_2 = Gaussian_integral(f, a, b, xs[N2], coefficients[N2])
+    approx_integral_3 = Gaussian_integral(f, a, b, xs[N3], coefficients[N3])
 
-print(f'Точное значение интеграла f(x) от {a} до {b} = {integral}')
-print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N1} = {approx_integral_1}')
-print(f'Погрешность = {abs(integral - approx_integral_1)}')
-print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N2} = {approx_integral_2}')
-print(f'Погрешность = {abs(integral - approx_integral_2)}')
-print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N3} = {approx_integral_3}')
-print(f'Погрешность = {abs(integral - approx_integral_3)}')
+    print(f'Точное значение интеграла f(x) от {a} до {b} = {integral}')
+    print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N1} = {approx_integral_1}')
+    print(f'Погрешность = {abs(integral - approx_integral_1)}')
+    print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N2} = {approx_integral_2}')
+    print(f'Погрешность = {abs(integral - approx_integral_2)}')
+    print(f'Приближённое значение интеграла f(x) от {a} до {b} по КФ Гаусса порядка {N3} = {approx_integral_3}')
+    print(f'Погрешность = {abs(integral - approx_integral_3)}')
+
+    print('Если вы хотите закончить вычисления, введите 0')
+    print('Для продолжения введите любое число')
+    signal = int(input())
+
+    if signal == 0:
+        break
+
+    print('Введите пределы интегрирования: ')
+    a = float(input('A = '))
+    b = float(input('B = '))
