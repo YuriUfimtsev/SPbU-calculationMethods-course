@@ -38,26 +38,6 @@ def Gaussian_integral(f, a, b, x, A):
     return (b - a) / 2 * sum([A[k] * f(t[k]) for k in range(n)])
 
 
-# deg -- степень многочлена Лежандра
-# def get_roots_segments(A, B, N_roots, deg):
-#     h = (B - A) / N_roots
-#     control_points = [A + i * h for i in range(0, N_roots + 1)]
-#     segments = []
-#     for i in range(1, N_roots + 1):
-#         c, d = control_points[i - 1], control_points[i]
-#         if P(deg, c) * P(deg, d) < 0:
-#             segments.append((c, d))
-#     return segments
-#
-#
-# def secant(segment, deg, eps=10 ** -12):
-#     a, b = segment[0], segment[1]
-#     x = [a, b]
-#     while abs(x[-1] - x[-2]) >= eps:
-#         x.append(x[-1] - ((x[-1] - x[-2]) * (P(deg, x[-1]) / (P(deg, x[-1]) - P(deg, x[-2])))))
-#     return x[-1]
-
-
 print('Задача нахождения определённого интеграла при помощи КФ Гаусса')
 print('Вариант 9')
 print('f(x) = sin(x^2)')
